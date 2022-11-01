@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        TEST_DIR="/var/lib/jenkins/workspace/quickapp/unittest"
+        TEST_DIR="/var/lib/jenkins/workspace/nginx-app/unittest"
         DOCKER_IMAGE="longlc3/devops01-nginx"
     }
     stages {
