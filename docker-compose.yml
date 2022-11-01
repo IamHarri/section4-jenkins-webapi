@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: longlc3/devops01-nginx:latest
+    container_name: nginx-app
+    ports:
+      - "80:80"
