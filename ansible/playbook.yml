@@ -51,7 +51,7 @@
         password: '{{DOCKER_PASSWORD}}'
     
     - name: Start a container
-      shell: >
+      shell: |
           docker pull {{imageName}}
           docker-compose up -d
       args:
