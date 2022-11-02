@@ -4,6 +4,7 @@ pipeline {
         WORKPLACE_DIR="/var/lib/jenkins/workspace/nginx-app"
         TEST_DIR="/var/lib/jenkins/workspace/nginx-app/unittest"
         DOCKER_IMAGE="longlc3/devops01-nginx"
+        ANSIBLE_PATH="/var/lib/jenkins/workspace/nginx-app/ansible"
     }
     stages {
         stage("Build Stage"){
