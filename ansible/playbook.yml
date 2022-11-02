@@ -34,11 +34,9 @@
       ansible.builtin.apt:
         name:
           - docker
-          - docker.io
           - docker-compose
-          - docker-registry
         state: latest
-        update_cache: true
+        # update_cache: true
 
     - name: Copy file
       ansible.builtin.copy:
