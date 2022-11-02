@@ -37,18 +37,19 @@ pipeline {
             }
             steps {
                 dir("$ANSIBLE_PATH"){
-                withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    ansiblePlaybook(
-                        credentialsId: 'ssh-key',
-                        playbook: 'ansible/playbook.yml',
-                        inventory: 'hosts',
-                        become: 'yes',
-                        extraVars: [
-                            DOCKER_USERNAME: "$DOCKER_USERNAME",  
-                            DOCKER_PASSWORD: "$DOCKER_PASSWORD",
-                            WORKPLACE_DIR: "$WORKPLACE_DIR"
-                        ]
-                    )
+                    withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        ansiblePlaybook(
+                            credentialsId: 'ssh-key',
+                            playbook: 'ansible/playbook.yml',
+                            inventory: 'hosts',
+                            become: 'yes',
+                            extraVars: [
+                                DOCKER_USERNAME: "$DOCKER_USERNAME",  
+                                DOCKER_PASSWORD: "$DOCKER_PASSWORD",
+                                WORKPLACE_DIR: "$WORKPLACE_DIR"
+                            ]
+                        )
+                    }
                     
                 }
                 
