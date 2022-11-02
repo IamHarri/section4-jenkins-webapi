@@ -3,7 +3,7 @@
   hosts: web-server
   become: true
   vars:
-    dockerPath: "/home/ubuntu/data/"
+    dockerPath: "/home/ubuntu/data"
     imageName: "longlc3/devops01-nginx"
   # vars_prompt:
   #   - name: dockerPass
