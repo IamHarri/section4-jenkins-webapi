@@ -7,3 +7,5 @@ if [ $SHOW == "true" ]; then
 else
     echo " If you want to see the name, let change show into true"
 fi
+
+# this new features
