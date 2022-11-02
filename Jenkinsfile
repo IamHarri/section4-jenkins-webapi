@@ -42,7 +42,7 @@ pipeline {
                         ansiblePlaybook(
                             credentialsId: 'ssh-key',
                             playbook: 'ansible/playbook.yml',
-                            inventory: 'hosts',
+                            inventory: 'ansible/inventory.ini',
                             become: 'yes',
                             extraVars: [
                                 DOCKER_USERNAME: "$DOCKER_USERNAME",  
