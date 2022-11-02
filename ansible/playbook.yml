@@ -54,4 +54,5 @@
       shell: >
           docker pull {{imageName}}
           docker-compose up -d
-      chdir: '{{dockerPath}}'
+      args:
+        chdir: '{{dockerPath}}'
