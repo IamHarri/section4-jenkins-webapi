@@ -52,5 +52,5 @@
     
     - name: Start a container
       shell: >
-        docker-compose pull  -f {{dockerPath}}/docker-compose.yml
+        docker pull {{mageName}}
         docker-compose -f {{dockerPath}}/docker-compose.yml up -d
