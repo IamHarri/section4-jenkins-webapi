@@ -51,6 +51,8 @@
         password: '{{DOCKER_PASSWORD}}'
     
     - name: Start a container
-      shell: >
-        docker pull {{imageName}}
-        docker-compose -f {{dockerPath}}/docker-compose.yml up -d
+      shell:
+        cmd: >
+          docker pull {{imageName}}
+          docker-compose up -d
+        chdir: {{dockerPath}}
