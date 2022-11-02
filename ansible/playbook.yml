@@ -1,0 +1,57 @@
+---
+- name: install Docker
+  hosts: web-server
+  become: true
+  vars:
+    dockerPath: "/home/ubuntu/data/"
+    imageName: "longlc3/devops01-nginx"
+  # vars_prompt:
+  #   - name: dockerPass
+  #     prompt: Enter password
+  tasks:
+    - name: Install apt-transport-https
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - lsb-release
+          - gnupg
+        state: latest
+        update_cache: true
+
+    - name: Add signing key
+      ansible.builtin.apt_key:
+        url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+        state: present
+
+    - name: Add repository into sources list
+      ansible.builtin.apt_repository:
+        repo: "deb [arch={{ ansible_architecture }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+        state: present
+        filename: docker
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        name:
+          - docker
+          - docker.io
+          - docker-compose
+          - docker-registry
+        state: latest
+        update_cache: true
+
+    - name: Copy file
+      ansible.builtin.copy:
+        src: '{{WORKPLACE_DIR}}/{{item}}'
+        dest: "{{dockerPath}}"
+      with_items:
+        - docker-compose.yml
+    
+    - name: Log into DockerHub
+      docker_login:
+        username: '{{DOCKER_USERNAME}}' 
+        password: '{{DOCKER_PASSWORD}}'
+    
+    - name: Start a container
+      shell: >
+        docker-compose -f {{dockerPath}}/docker-compose.yml up -d
