@@ -1,7 +1,7 @@
 # Result
 ![image](./images/result.png)
 
-# reparation plugins
+# Preparation plugins
 - ansible
 - sonar-scanner
 - allure
