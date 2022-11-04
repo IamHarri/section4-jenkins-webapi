@@ -45,10 +45,13 @@
       with_items:
         - docker-compose.yml
     
-    - name: Log into DockerHub
-      docker_login:
-        username: '{{DOCKER_USERNAME}}' 
-        password: '{{DOCKER_PASSWORD}}'
+    # - name: Log into DockerHub
+    #   docker_login:
+    #     username: '{{DOCKER_USERNAME}}' 
+    #     password: '{{DOCKER_PASSWORD}}'
+    - name: Login DockerHub
+      shell: docker login -u "{{DOCKER_USERNAME}}" -p "{{DOCKER_PASSWORD}}"
+
     
     - name: Start a container
       shell: |
