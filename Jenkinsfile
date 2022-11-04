@@ -45,12 +45,11 @@ pipeline {
         stage("Scan Security"){
             steps{
                 dir("$WEDAPI_DIR"){
-                  
-                        //def scannerHome = tool 'sonarscannerms', type: 'hudson.plugins.sonar.SonarRunnerInstallation' 
-              
-                    sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll begin /k:\"sonar-project\" /d:sonar.host.url=\"http://23.20.49.62:9000\"  /d:sonar.login=\"6cbba5b2f232e64f0f1003abede885f4ae9d0b8d\""
-                    sh "dotnet build"
-                    sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll end /d:sonar.login=\"6cbba5b2f232e64f0f1003abede885f4ae9d0b8d\""
+                    withSonarQubeEnv('sonar-server') {
+                        sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll begin /k:\"sonar-project\""
+                        sh "dotnet build"
+                        sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll end"
+                    }
 
                     
                 }
