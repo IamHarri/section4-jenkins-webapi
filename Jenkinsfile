@@ -1,10 +1,12 @@
 pipeline {
     agent any
     environment{
-        WORKPLACE_DIR="/var/lib/jenkins/workspace/nginx-app"
-        TEST_DIR="/var/lib/jenkins/workspace/nginx-app/unittest"
+        WORKPLACE_DIR="/var/lib/jenkins/workspace/webapi"
+        TEST_DIR="/var/lib/jenkins/workspace/webapi/unittest"
         DOCKER_IMAGE="longlc3/devops01-nginx"
-        ANSIBLE_PATH="/var/lib/jenkins/workspace/nginx-app/ansible"
+        ANSIBLE_PATH="/var/lib/jenkins/workspace/webapi/ansible"
+        WEDAPI_DIR="/var/lib/jenkins/workspace/webapi/webapi"
+        MSBuild2019 = tool "MSBuild2019";
     }
     stages {
         stage("Build Stage"){
@@ -40,6 +42,22 @@ pipeline {
             }
         }
 
+        stage("Scan Security"){
+            steps{
+                dir("$WEDAPI_DIR"){
+                    script{
+                        def sqScannerMsBuildHome = tool name: 'sonar-scanner'
+                        //def scannerHome = tool 'sonarscannerms', type: 'hudson.plugins.sonar.SonarRunnerInstallation' 
+                        withSonarQubeEnv('sonar-key') {
+                            sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll begin /k:\"sonar-project\" /d:sonar.host.url=\"http://23.20.49.62:9000\"  /d:sonar.login=\"6cbba5b2f232e64f0f1003abede885f4ae9d0b8d\""
+                            sh "sudo dotnet build"
+                            sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll end /d:sonar.login=\"6cbba5b2f232e64f0f1003abede885f4ae9d0b8d\""
+    
+                        }
+                    }
+                }
+            }
+        }
         stage("Deploy Stage"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
