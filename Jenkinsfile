@@ -83,7 +83,7 @@ pipeline {
     }
     post { 
         always { 
-            echo "Pipeline is finish with status"
+            echo "Pipeline is finish with status !"
         }
         success {
             echo "SUCCEED"
