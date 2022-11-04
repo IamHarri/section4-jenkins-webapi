@@ -1,12 +1,14 @@
 pipeline {
-    agent any
+    agent {
+        label 'slave2' // choose slave to build
+    }
     environment{
         WORKPLACE_DIR="/var/lib/jenkins/workspace/webapi"
         TEST_DIR="/var/lib/jenkins/workspace/webapi/unittest"
         DOCKER_IMAGE="longlc3/devops01-nginx"
         ANSIBLE_PATH="/var/lib/jenkins/workspace/webapi/ansible"
         WEDAPI_DIR="/var/lib/jenkins/workspace/webapi/webapi"
-        sqScannerMsBuildHome = tool "sonar-scanner"
+        sqScannerMsBuildHome = tool "sonar-scanner" // Need this plugin and define this tool in global tools or configure system
     }
     stages {
         stage("Build Stage"){
@@ -15,7 +17,6 @@ pipeline {
                 sh 'docker-compose build'
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
-                    // sh "docker tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$BUILD_NUMBER"
                     sh "docker push $DOCKER_IMAGE"
                 }
 
@@ -23,12 +24,11 @@ pipeline {
         }
         stage("Test Stage"){
             tools {
-                allure 'allure2.2'
+                allure 'allure2.2' // Need this plugin and define it in global tools or configure system
             }
             steps{
                 dir("$TEST_DIR"){
                     sh 'dotnet test -o target'
-                    // allure results: [[path: 'target/allure-results']]
                     script{
                         allure ([
                             includeProperties: false,
@@ -45,6 +45,7 @@ pipeline {
         stage("Scan Security"){
             steps{
                 dir("$WEDAPI_DIR"){
+                    // Need to define 'sonar-server' in configure system
                     withSonarQubeEnv('sonar-server') {
                         sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll begin /k:\"sonar-project\""
                         sh "dotnet build"
@@ -70,7 +71,8 @@ pipeline {
                             extraVars: [
                                 DOCKER_USERNAME: "$DOCKER_USERNAME",  
                                 DOCKER_PASSWORD: "$DOCKER_PASSWORD",
-                                WORKPLACE_DIR: "$WORKPLACE_DIR"
+                                WORKPLACE_DIR: "$WORKPLACE_DIR",
+                                IMAGE_NAME: "$DOCKER_IMAGE"
                             ]
                         )
                     }
