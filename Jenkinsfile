@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE="longlc3/devops01-nginx"
         ANSIBLE_PATH="/var/lib/jenkins/workspace/webapi/ansible"
         WEDAPI_DIR="/var/lib/jenkins/workspace/webapi/webapi"
-        SonarScanner = tool "sonar-scanner"
+        sqScannerMsBuildHome = tool "sonar-scanner"
     }
     stages {
         stage("Build Stage"){
