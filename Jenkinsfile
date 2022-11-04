@@ -81,4 +81,15 @@ pipeline {
         }
 
     }
+    post { 
+        always { 
+            echo "Pipeline is finish with status"
+        }
+        success {
+            echo "SUCCEED"
+        }
+        failure {
+            echo "FAIL"
+        }
+    }
 }
