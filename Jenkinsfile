@@ -6,7 +6,6 @@ pipeline {
         DOCKER_IMAGE="longlc3/devops01-nginx"
         ANSIBLE_PATH="/var/lib/jenkins/workspace/webapi/ansible"
         WEDAPI_DIR="/var/lib/jenkins/workspace/webapi/webapi"
-        MSBuild2019 = tool "MSBuild2019";
     }
     stages {
         stage("Build Stage"){
