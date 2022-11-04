@@ -22,15 +22,23 @@ pipeline {
         stage("Test Stage"){
             steps{
                 dir("$TEST_DIR"){
-                    sh 'dotnet test'
+                    tools {
+                        allure 'allure2.2'
+                    }
+                    sh 'dotnet test -o target'
+                    // allure results: [[path: 'target/allure-results']]
+                    script{
+                        allure ([
+                            includeProperties: false,
+                            jdk:'',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: 'target/allure-results']]
+                        ])
+                    }
                 }
             }
         }
-        // stage("deploy Stage"){
-        //     steps{
-        //         sh 'docker-compose up -d'
-        //     }
-        // }
 
         stage("Deploy Stage"){
             options {

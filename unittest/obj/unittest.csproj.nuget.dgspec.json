@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\DevOps_01\\section4\\webhook-jenkins\\unittest\\unittest.csproj": {}
+    "F:\\DevOps_01\\section4\\devops01-section4-jenkins\\unittest\\unittest.csproj": {}
   },
   "projects": {
-    "F:\\DevOps_01\\section4\\webhook-jenkins\\unittest\\unittest.csproj": {
+    "F:\\DevOps_01\\section4\\devops01-section4-jenkins\\unittest\\unittest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\DevOps_01\\section4\\webhook-jenkins\\unittest\\unittest.csproj",
+        "projectUniqueName": "F:\\DevOps_01\\section4\\devops01-section4-jenkins\\unittest\\unittest.csproj",
         "projectName": "unittest",
-        "projectPath": "F:\\DevOps_01\\section4\\webhook-jenkins\\unittest\\unittest.csproj",
+        "projectPath": "F:\\DevOps_01\\section4\\devops01-section4-jenkins\\unittest\\unittest.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "F:\\DevOps_01\\section4\\webhook-jenkins\\unittest\\obj\\",
+        "outputPath": "F:\\DevOps_01\\section4\\devops01-section4-jenkins\\unittest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Allure.Commons": {
+              "target": "Package",
+              "version": "[3.5.0.65, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.9.4, )"
@@ -48,9 +52,17 @@
               "target": "Package",
               "version": "[3.13.1, )"
             },
+            "NUnit.Allure": {
+              "target": "Package",
+              "version": "[1.0.14, )"
+            },
             "NUnit3TestAdapter": {
               "target": "Package",
               "version": "[3.17.0, )"
+            },
+            "SpecFlow.Allure": {
+              "target": "Package",
+              "version": "[3.5.0.65, )"
             },
             "coverlet.collector": {
               "target": "Package",

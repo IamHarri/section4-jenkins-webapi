@@ -1,7 +1,11 @@
 using NUnit.Framework;
+using Allure.Commons;
+using NUnit.Allure.Attributes;
+using NUnit.Allure.Core;
 
 namespace unittest
 {
+    [AllureNUnit] 
     public class Tests
     {
         [SetUp]
