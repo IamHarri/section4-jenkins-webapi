@@ -20,11 +20,11 @@ pipeline {
             }
         }
         stage("Test Stage"){
+            tools {
+                allure 'allure2.2'
+            }
             steps{
                 dir("$TEST_DIR"){
-                    tools {
-                        allure 'allure2.2'
-                    }
                     sh 'dotnet test -o target'
                     // allure results: [[path: 'target/allure-results']]
                     script{
