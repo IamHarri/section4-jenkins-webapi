@@ -22,44 +22,46 @@ pipeline {
 
             }
         }
-        parallel {
-            stage("Test Stage"){
-                tools {
-                    allure 'allure2.2' // Need this plugin and define it in global tools or configure system
-                }
-                agent {
-                    label "master"
-                }
-                steps{
-                    dir("$TEST_DIR"){
-                        sh 'dotnet test -o target'
-                        script{
-                            allure ([
-                                includeProperties: false,
-                                jdk:'',
-                                properties: [],
-                                reportBuildPolicy: 'ALWAYS',
-                                results: [[path: 'target/allure-results']]
-                            ])
+        stage("Security Stage"){
+            parallel {
+                stage("Test Stage"){
+                    tools {
+                        allure 'allure2.2' // Need this plugin and define it in global tools or configure system
+                    }
+                    agent {
+                        label "master"
+                    }
+                    steps{
+                        dir("$TEST_DIR"){
+                            sh 'dotnet test -o target'
+                            script{
+                                allure ([
+                                    includeProperties: false,
+                                    jdk:'',
+                                    properties: [],
+                                    reportBuildPolicy: 'ALWAYS',
+                                    results: [[path: 'target/allure-results']]
+                                ])
+                            }
                         }
                     }
                 }
-            }
 
-            stage("Scan Security"){
-                agent {
-                    label "slave1"
-                }
-                steps{
-                    dir("$WEDAPI_DIR"){
-                        // Need to define 'sonar-server' in configure system
-                        withSonarQubeEnv('sonar-server') {
-                            sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll begin /k:\"sonar-project\""
-                            sh "dotnet build"
-                            sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll end"
+                stage("Scan Security"){
+                    agent {
+                        label "slave1"
+                    }
+                    steps{
+                        dir("$WEDAPI_DIR"){
+                            // Need to define 'sonar-server' in configure system
+                            withSonarQubeEnv('sonar-server') {
+                                sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll begin /k:\"sonar-project\""
+                                sh "dotnet build"
+                                sh "dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll end"
+                            }
+
+                            
                         }
-
-                        
                     }
                 }
             }
