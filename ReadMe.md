@@ -10,4 +10,4 @@
 -  docker
 
 # Note
-` You can deploy sonarqube server through sonar_userdata.sh
+` You can deploy sonarqube server through  sonar_userdata.sh
