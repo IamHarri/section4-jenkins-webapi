@@ -36,6 +36,7 @@
           - docker-registry
         state: latest
         update_cache: true
+      ignore_errors: true
 
     - name: Copy file
       ansible.builtin.copy:
