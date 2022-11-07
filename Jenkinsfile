@@ -29,7 +29,7 @@ pipeline {
                         allure 'allure2.2' // Need this plugin and define it in global tools or configure system
                     }
                     agent {
-                        label "master"
+                        label "slave1ch"
                     }
                     steps{
                         dir("$TEST_DIR"){
@@ -49,7 +49,7 @@ pipeline {
 
                 stage("Scan Security"){
                     agent {
-                        label "slave1"
+                        label "master"
                     }
                     steps{
                         dir("$WEDAPI_DIR"){
