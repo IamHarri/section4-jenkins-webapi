@@ -26,9 +26,6 @@ pipeline {
             tools {
                 allure 'allure2.2' // Need this plugin and define it in global tools or configure system
             }
-            agent {
-                label "slave1ch"
-            }
             steps{
                 dir("$TEST_DIR"){
                     sh 'dotnet test -o target'
@@ -46,9 +43,6 @@ pipeline {
         }
 
         stage("Scan Security"){
-            agent {
-                label "master"
-            }
             steps{
                 dir("$WEDAPI_DIR"){
                     // Need to define 'sonar-server' in configure system
