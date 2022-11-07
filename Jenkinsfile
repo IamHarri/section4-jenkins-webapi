@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'slave2' // choose slave to build
+        label 'master' // choose slave to build
     }
     environment{
         WORKPLACE_DIR="/var/lib/jenkins/workspace/webapi"
@@ -17,7 +17,7 @@ pipeline {
                 sh 'docker-compose build'
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
-                    sh "docker push $DOCKER_IMAGE"
+                    sh "docker push $DOCKER_IMAGE"sudo service docker restart
                 }
 
             }
